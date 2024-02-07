@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app'
 ]
 
 MIDDLEWARE = [
@@ -50,11 +51,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'concrete_nn_app.urls'
-
+TEMPLATE_DIR = '/app/templates'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,14 +77,13 @@ WSGI_APPLICATION = 'concrete_nn_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PG_DB'),
-        'USER': os.environ.get('PG_USER'),
-        'PASSWORD': os.environ.get('PG_PASSWORD'),
-        'HOST': os.environ.get('PG_HOST'),
-        'PORT': 5432
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

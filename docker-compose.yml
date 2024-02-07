@@ -11,30 +11,24 @@ services:
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
     env_file:
-      - .env
+      - ./.env
     depends_on:
       - postgres
-    environment:
-      SECRET_KEY: "django-insecure-a6tt1(#u_gf*a8f4&c0i35qmf(4*ozm9w05pba(o)kw9p*s52$"
-      PG_HOST: "postgres"
-      PG_DB: "postgres"
-      PG_USER: "postgres"
-      PG_PASSWORD: "admin"
-      PGADMIN_DEFAULT_EMAIL: "mikhailroot01@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
+    networks:
+      - default
 
   postgres:
     container_name: postgres
-    image: postgres:14.6-alpine
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    image: postgres:latest
     ports:
       - "5432:5432"
     restart: always
     env_file:
-      - .env
+      - ./.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - default
 
   pgadmin:
     container_name: pgadmin
@@ -46,6 +40,14 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     env_file:
-      - .env
+      - ./.env
     depends_on:
       - postgres
+    networks:
+      - default
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
